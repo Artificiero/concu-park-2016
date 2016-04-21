@@ -1,0 +1,50 @@
+# depslib dependency file v1.0
+1461204943 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/LockFile.cpp
+	"LockFile.h"
+
+1461204897 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/LockFile.h
+	<iostream>
+	<errno.h>
+	<unistd.h>
+	<fcntl.h>
+	<string>
+
+1461205049 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/main.cpp
+	<iostream>
+	<stdlib.h>
+	"LockFile.h"
+
+1461204943 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/LockFile.cpp
+	"LockFile.h"
+
+1461204897 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/LockFile.h
+	<iostream>
+	<errno.h>
+	<unistd.h>
+	<fcntl.h>
+	<string>
+
+1461211334 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
+	<iostream>
+	<stdlib.h>
+	"LockFile.h"
+	"Puerta.h"
+	"MemoriaCompartida2.h"
+
+1461211525 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Puerta.cpp
+	"Puerta.h"
+
+1461211258 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Puerta.h
+	<iostream>
+	"LockFile.h"
+	"MemoriaCompartida2.h"
+
+1461211138 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/MemoriaCompartida2.h
+	<sys/types.h>
+	<sys/ipc.h>
+	<sys/shm.h>
+	<string>
+	<string.h>
+	<iostream>
+	<errno.h>
+
