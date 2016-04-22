@@ -35,10 +35,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/CajaCentral.h" />
 		<Unit filename="include/LockFile.h" />
 		<Unit filename="include/MemoriaCompartida2.h" />
+		<Unit filename="include/Persona.h" />
 		<Unit filename="include/Puerta.h" />
+		<Unit filename="src/CajaCentral.cpp" />
 		<Unit filename="src/LockFile.cpp" />
+		<Unit filename="src/Persona.cpp" />
 		<Unit filename="src/Puerta.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>

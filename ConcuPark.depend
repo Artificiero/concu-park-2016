@@ -14,7 +14,7 @@
 	<stdlib.h>
 	"LockFile.h"
 
-1461204943 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/LockFile.cpp
+1461284756 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/LockFile.cpp
 	"LockFile.h"
 
 1461204897 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/LockFile.h
@@ -24,12 +24,14 @@
 	<fcntl.h>
 	<string>
 
-1461211334 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
+1461284917 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
 	<iostream>
 	<stdlib.h>
 	"LockFile.h"
 	"Puerta.h"
 	"MemoriaCompartida2.h"
+	"Persona.h"
+	<sstream>
 
 1461211525 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Puerta.cpp
 	"Puerta.h"
@@ -47,4 +49,18 @@
 	<string.h>
 	<iostream>
 	<errno.h>
+
+1461275571 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/CajaCentral.cpp
+	"CajaCentral.h"
+
+1461275564 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/CajaCentral.h
+	"LockFile.h"
+	"MemoriaCompartida2.h"
+
+1461284928 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
+	"Persona.h"
+
+1461284803 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Persona.h
+	"Puerta.h"
+	"CajaCentral.h"
 

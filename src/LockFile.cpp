@@ -12,7 +12,7 @@ LockFile :: LockFile ( const std::string nombre ) {
 	if (fdAux >= 0) {
 		this->fd = fdAux;
 	} else {
-        std::cout << "PANICO! No se pudo crear lock: " << nombre << std::endl;
+        std::cout << "PANICO! No se pudo crear el file para el lock: " << nombre << std::endl;
 	}
 }
 
