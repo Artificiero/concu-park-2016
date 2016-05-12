@@ -8,119 +8,14 @@
 #include "FifoEscritura.h"
 #include "FifoLectura.h"
 #include <iostream>
-#include <stdlib.h>
 #include <sys/wait.h>
 #include <cstring>
+#include "Juego.h"
+#include <map>
 
 using namespace std;
 
-int pruebaPuerta() {
-
-    int numeroDeHijo;
-    pid_t processId;
-
-    int cantidadDeHijos=50;
-
-    Puerta puerta("puerta");
-
-    for(int i=0;i<cantidadDeHijos;i++) {
-        processId = fork() ;
-        if ( processId == 0 ) {
-            numeroDeHijo = i;
-            std::cout << "Child reporting in:" << numeroDeHijo << std::endl;
-            break;
-        }
-    }
-
-    if ( processId != 0 ) {
-        std::cout << "en este momento el padre tiene "<< cantidadDeHijos << " hijos" << std::endl;
-        puerta.cruzar();
-        sleep(5);
-        std::cout << "gente que cruzo la puerta(incluye al padre): "<< puerta.getCantidadDeGenteQueCruzo() << std::endl;
-        std::cout << "dad says goodbye!" << std::endl;
-    } else {
-        puerta.cruzar();
-        std::cout << "Child says goodbye papa!" << numeroDeHijo << std::endl;
-    }
-    return 0;
-
-}
-
-int pruebaLock() {
-
-    int numeroDeHijo;
-    pid_t processId;
-    int cantidadDeHijos=25;
-
-    LockFile lock("lockxxxx");
-
-    for(int i=0;i<cantidadDeHijos;i++) {
-        processId = fork() ;
-        if ( processId == 0 ) {
-            numeroDeHijo = i;
-            std::cout << "Child reporting in:" << numeroDeHijo << std::endl;
-            break;
-        }
-    }
-
-    if ( processId != 0 ) {
-        std::cout << "en este momento el padre tiene "<< cantidadDeHijos << " hijos" << std::endl;
-        lock.tomarLock();
-        sleep(10);
-        lock.liberarLock();
-        std::cout << "dad says goodbye!" << std::endl;
-    } else {
-        sleep(2);
-        lock.tomarLock();
-        std::cout << "Child says goodbye papa! " << numeroDeHijo << std::endl;
-        sleep(1);
-        lock.liberarLock();
-    }
-    return 0;
-}
-
-int probarPersonasViviendo() {
-
-    Puerta      pe("puertaEntrada");
-    Puerta      ps("puertaSalida");
-    CajaCentral cc("cajaCentral");
-
-    int numeroDeHijo;
-    pid_t processId;
-    int cantidadDeHijos=25;
-
-    for(int i=0;i<cantidadDeHijos;i++) {
-        processId = fork() ;
-        if ( processId == 0 ) {
-            numeroDeHijo = i;
-            std::cout << "procesoHijo:" << numeroDeHijo << std::endl;
-            break;
-        }
-    }
-
-    if ( processId != 0 ) {
-        std::cout << "en este momento el padre tiene "<< cantidadDeHijos << " hijos" << std::endl;
-        sleep(10);
-    } else {
-
-        ostringstream ss;
-        ss << numeroDeHijo;
-        string str = ss.str();
-
-        const char* c = str.c_str();
-
-        Persona persona( 100, c ,pe,ps,cc);
-        persona.vivir();
-
-        return 0;
-    }
-
-    cout << "plata en la caja: " << cc.getCantidadDeDineroAlmacenada() << endl;
-
-
-    return 0;
-
-}
+#include <fstream>
 
 int probarFifos(){
 
@@ -216,12 +111,107 @@ int probarFifos(){
 	}
 }
 
+
+int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
+
+    Puerta      pe("puertaEntrada");
+    Puerta      ps("puertaSalida");
+    CajaCentral cc("cajaCentral");
+
+    int numeroDeJuego=0;
+    pid_t processId;
+    std::list<FolletoJuego> cartillaJuegos;
+    std::list<pid_t> procesosCreados;
+
+    for(int i=0;i<cantidadDeJuegos;i++) {
+        processId = fork() ;
+        if ( processId == 0 ) {
+            numeroDeJuego = i;
+            std::cout << "Juego reporting in: " << numeroDeJuego << std::endl;
+            break;
+        } else {
+            //esto se guarda en el padre
+            std::stringstream ss;
+            ss << numeroDeJuego;
+            std::string nombreJuego = ss.str();
+
+            FolletoJuego fj(1,nombreJuego);
+
+            cartillaJuegos.push_back(fj);
+
+            procesosCreados.push_back(processId);
+        }
+    }
+
+	if ( processId == 0 ) {
+        //estoy en un proceso HIJO, donde voy a crear el juego
+        //cada proceso hijo tiene un NUMERODEHIJO al salir del fork
+        std::stringstream ss;
+        ss << numeroDeJuego;
+        std::string nombreJuego = ss.str();
+        Juego juego(nombreJuego,5,1,1);
+
+        //aca dentro esta la inteligencia del juego y el loop
+        juego.iniciar();
+
+	} else {
+        //proceso principal padre
+        //ordenado de menor a mayor
+        cartillaJuegos.sort();
+
+        int numeroDePersona=0;
+
+        for(int i=0;i<cantidadPersonas;i++) {
+            processId = fork() ;
+            if ( processId == 0 ) {
+                numeroDePersona = i;
+                std::cout << "Persona reporting in: " << numeroDePersona << std::endl;
+                break;
+            } else {
+                //el padre actualiza esto
+                procesosCreados.push_back(processId);
+            }
+        }
+
+        if ( processId == 0 ) {
+            //estoy en un proceso HIJO, donde voy a crear las personas
+            //cada proceso hijo tiene un NUMERODEHIJO al salir del fork
+            std::stringstream ss;
+            ss << numeroDePersona;
+            std::string nombrePersona = ss.str();
+            Persona persona(1,nombrePersona,pe,ps,cc,cartillaJuegos);
+
+            //aca dentro esta la inteligencia del juego y el loop
+            persona.vivir();
+        } else {
+            wait(NULL);
+        // tengo una listaprocesosCreados ... puedo leer algo de consola y mandar signal para detener a todos!
+        }
+	}
+
+    return 0;
+}
+
 int main () {
 
-    //return pruebaPuerta();
-    //return pruebaLock();
-    //return probarPersonasViviendo();
-    return probarFifos();
+    //nombre tiempoDeJuego cantNecesariasParaArrancar precio
+
+    //std::ifstream juegosFile("Juegos.txt");
+    //std::ifstream personasFile("Personas.txt");
+
+    //std::string nombreJuego;
+    //int tiempoDeJuego=0;
+    //int cantNecesariasParaArrancar=0;
+    //int precio=0;
+
+    //while (juegosFile >> nombreJuego >> tiempoDeJuego >> cantNecesariasParaArrancar >> precio)
+    //{
+    //    std::cout << "lei:"<<std::endl;
+    //    std::cout << nombreJuego << tiempoDeJuego << cantNecesariasParaArrancar << precio << std::endl;
+    //}
+
+
+    return probarJuegosPersonas(1,1);
 
     return 0;
 }

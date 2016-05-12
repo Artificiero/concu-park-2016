@@ -10,7 +10,7 @@ class CajaCentral
         CajaCentral(std::string nombre);
         virtual ~CajaCentral();
 
-        int ingresarDinero(unsigned int billetes);
+        int ingresarDinero(int billetes);
         int getCantidadDeDineroAlmacenada();
 
     protected:

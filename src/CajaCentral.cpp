@@ -5,7 +5,7 @@ CajaCentral::CajaCentral(const std::string nombre): lock(nombre),plata(nombre,'A
     this->nombre = nombre;
 }
 
-int CajaCentral::ingresarDinero(unsigned int billetes) {
+int CajaCentral::ingresarDinero(int billetes) {
 
     this->lock.tomarLock();
     //la memora compartida se sincroniza via los locks
@@ -18,8 +18,9 @@ int CajaCentral::ingresarDinero(unsigned int billetes) {
 
 int CajaCentral::getCantidadDeDineroAlmacenada() {
     this->lock.tomarLock();
-    return this->plata.leer();
-
+    int plata = this->plata.leer();
+    this->lock.liberarLock();
+    return plata;
 }
 
 CajaCentral::~CajaCentral()

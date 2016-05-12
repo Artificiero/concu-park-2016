@@ -11,5 +11,8 @@ void FifoLectura::abrir() {
 }
 
 ssize_t FifoLectura::leer(void* buffer,const ssize_t buffsize) const {
-	return read ( fd,buffer,buffsize );
+
+    ssize_t result = read ( fd,buffer,buffsize );
+    std::cout << "fifolectura - result: " << result << std::endl;
+	return result;
 }

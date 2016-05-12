@@ -3,30 +3,40 @@
 
 #include "Puerta.h"
 #include "CajaCentral.h"
+#include <list>
+#include "FolletoJuego.h"
+#include <stdlib.h>
+#include <iostream>
+#include <cstring>
+#include "FifoEscritura.h"
+#include "FifoLectura.h"
 
 class Persona
 {
     public:
-        Persona(unsigned int presupuesto,std::string nombre,Puerta &puertaEntrada,Puerta &PuertaSalida,CajaCentral &cajaCentral);
+        Persona(unsigned int presupuesto,std::string nombre,Puerta &puertaEntrada,Puerta &PuertaSalida,CajaCentral &cajaCentral,std::list<FolletoJuego> cartillaDeJuegos);
         virtual ~Persona();
 
         int vivir();
 
-        int getPlataRestante() {
+        int getPlataRestante() const {
             return this->presupuesto;
             }
 
+        int ponerseEnColaDeJuego(std::string nombreDelJuego);
 
     protected:
     private:
 
-    unsigned int presupuesto;
+    int presupuesto;
     std::string nombre;
 
     Puerta puertaEntrada;
     Puerta puertaSalida;
 
     CajaCentral cajaCentral;
+
+    std::list<FolletoJuego> cartillaDeJuegos;
 };
 
 #endif // PERSONA_H
