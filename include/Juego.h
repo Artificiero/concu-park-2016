@@ -24,9 +24,6 @@ class Juego
     int cantidadDePersonasNecesariasParaArrancar;
     int precioParaSubir;
 
-    //Este es el fifo que las Personas usan para ponerse en la cola del Juego.Convencion de nombres.
-    FifoLectura cola;
-
     std::list<std::string> nombresPersonas;
 
 };

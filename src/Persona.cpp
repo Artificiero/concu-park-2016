@@ -26,7 +26,7 @@ int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 		std::cout << "Persona:"<< this->nombre << " :intento entrar al juego(escribir en el fifo):"<< ARCHIVO_JUEGO << std::endl;
 		canalJuego.escribir ( static_cast<const void*>(buff),sizeof(buff) );
         std::cout << "Persona:"<< this->nombre << " Logre comunicarme con el juego, mande " << sizeof(buff) << " bytes"<< std::endl;
-        canalJuego.cerrar();
+        //canalJuego.cerrar();
 
         static const std::string lecturaPropiaHijo = "/tmp/archivo_fifo_persona_" + this->nombre;
 

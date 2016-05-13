@@ -42,6 +42,7 @@
 		<Unit filename="include/FolletoJuego.h" />
 		<Unit filename="include/Juego.h" />
 		<Unit filename="include/LockFile.h" />
+		<Unit filename="include/Logger.h" />
 		<Unit filename="include/MemoriaCompartida2.h" />
 		<Unit filename="include/Persona.h" />
 		<Unit filename="include/Puerta.h" />
@@ -53,6 +54,7 @@
 		<Unit filename="src/FolletoJuego.cpp" />
 		<Unit filename="src/Juego.cpp" />
 		<Unit filename="src/LockFile.cpp" />
+		<Unit filename="src/Logger.cpp" />
 		<Unit filename="src/Persona.cpp" />
 		<Unit filename="src/Puerta.cpp" />
 		<Unit filename="src/Semaforo.cpp" />

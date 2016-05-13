@@ -7,6 +7,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <iostream>
+#include <errno.h>
+#include <cstdio>
 
 class Fifo {
 public:

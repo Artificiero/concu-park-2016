@@ -1,7 +1,7 @@
 #include "Juego.h"
 
 Juego::Juego(std::string nombre, int tiempoDeJuego, int cantNecesariasParaArrancar,int precio):nombre(nombre),tiempoDeJuego(tiempoDeJuego),cantidadDePersonasEnLaCola(0)
-                                                                                                ,cantidadDePersonasNecesariasParaArrancar(cantNecesariasParaArrancar),precioParaSubir(precio),cola("/tmp/archivo_fifo_juego_" + nombre)
+                                                                                                ,cantidadDePersonasNecesariasParaArrancar(cantNecesariasParaArrancar),precioParaSubir(precio)
 {
 
 }
@@ -12,13 +12,16 @@ Juego::~Juego()
 
 int Juego::iniciar()
 {
-
+    //Este es el fifo que las Personas usan para ponerse en la cola del Juego.Convencion de nombres.
+    FifoLectura cola("/tmp/archivo_fifo_juego_" + this->nombre);
+    std::cout << "Juego)" << this->nombre << " se inicio" << std::endl;
     //voy a usar este fifo para recibir los nombres de las personas que quieren subir
-    this->cola.abrir();
+    cola.abrir();
+    std::cout << "Juego)" << this->nombre << " abrio su cola" << std::endl;
 
     while(true)
     {
-        std::cout << "Juego)"<< this->nombre << "nueva iteracion" << std::endl;
+        std::cout << "Juego)"<< this->nombre << " nueva iteracion" << std::endl;
         //cada persona que entra me "despierta", y me hace checkear la condicion
         while( this->cantidadDePersonasEnLaCola < this->cantidadDePersonasNecesariasParaArrancar )
         {
@@ -28,14 +31,15 @@ int Juego::iniciar()
 
             //las personas ENTRAN DE A 1
             //me bloqueo hasta que alguien quiere subir al juego
-            ssize_t bytesLeidos = this->cola.leer(static_cast<void*>(buffer),sizeof(buffer));
+            std::cout << "Juego)" << this->nombre << " busco personas en mi cola" << std::endl;
+            ssize_t bytesLeidos = cola.leer(static_cast<void*>(buffer),sizeof(buffer));
             std::cout << "Juego)"<< this->nombre << " leyo "<< buffer << " peso: "<< bytesLeidos << std::endl;
 
             //aumento cantidad de gente en la cola al entrar alguien, me libero y checkeo condicion
             this->nombresPersonas.push_front(std::string(buffer));
             this->cantidadDePersonasEnLaCola++;
         }
-        std::cout << "Juego)"<< this->nombre << "hay suficientes personas para correr" << std::endl;
+        std::cout << "Juego)"<< this->nombre << " hay suficientes personas para correr" << std::endl;
         //cuando hay la SUFICIENTE CANTIDAD DE PERSONAS, arranco.
         //Las demas personas ,que estan esperando para entrar y todavia no entraron,
         //se quedan bloquedas en el write al fifo COLA del juego
@@ -73,8 +77,8 @@ int Juego::iniciar()
 
         //vuelvo a empezar
     }
-    this->cola.cerrar();
-    this->cola.eliminar();
+    cola.cerrar();
+    cola.eliminar();
 
     return 0;
 }

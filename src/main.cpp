@@ -12,7 +12,7 @@
 #include <cstring>
 #include "Juego.h"
 #include <map>
-
+#include "Logger.h"
 using namespace std;
 
 #include <fstream>
@@ -111,7 +111,6 @@ int probarFifos(){
 	}
 }
 
-
 int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
 
     Puerta      pe("puertaEntrada");
@@ -136,9 +135,7 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
             std::string nombreJuego = ss.str();
 
             FolletoJuego fj(1,nombreJuego);
-
             cartillaJuegos.push_back(fj);
-
             procesosCreados.push_back(processId);
         }
     }
@@ -149,7 +146,7 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
         std::stringstream ss;
         ss << numeroDeJuego;
         std::string nombreJuego = ss.str();
-        Juego juego(nombreJuego,5,1,1);
+        Juego juego(nombreJuego,1,1,1);
 
         //aca dentro esta la inteligencia del juego y el loop
         juego.iniciar();
@@ -157,6 +154,7 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
 	} else {
         //proceso principal padre
         //ordenado de menor a mayor
+        sleep(2);
         cartillaJuegos.sort();
 
         int numeroDePersona=0;
@@ -180,7 +178,6 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
             ss << numeroDePersona;
             std::string nombrePersona = ss.str();
             Persona persona(1,nombrePersona,pe,ps,cc,cartillaJuegos);
-
             //aca dentro esta la inteligencia del juego y el loop
             persona.vivir();
         } else {
@@ -192,26 +189,70 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
     return 0;
 }
 
-int main () {
+int crearJuegos( std::list<FolletoJuego>& cartillaJuegos,std::list<pid_t>& procesosCreados) {
+
+    pid_t processId;
 
     //nombre tiempoDeJuego cantNecesariasParaArrancar precio
+    std::ifstream juegosFile("Juegos.txt");
 
-    //std::ifstream juegosFile("Juegos.txt");
-    //std::ifstream personasFile("Personas.txt");
+    std::string nombreJuego;
+    int tiempoDeJuego;
+    int cantNecesariasParaArrancar;
+    int precio;
 
-    //std::string nombreJuego;
-    //int tiempoDeJuego=0;
-    //int cantNecesariasParaArrancar=0;
-    //int precio=0;
+    while (juegosFile >> nombreJuego >> tiempoDeJuego >> cantNecesariasParaArrancar >> precio)
+    {
+        std::cout << "Proceso principal) lei:"<<std::endl;
+        std::cout << nombreJuego <<" "<< tiempoDeJuego <<" "<< cantNecesariasParaArrancar <<" "<< precio <<" "<< std::endl;
 
-    //while (juegosFile >> nombreJuego >> tiempoDeJuego >> cantNecesariasParaArrancar >> precio)
-    //{
-    //    std::cout << "lei:"<<std::endl;
-    //    std::cout << nombreJuego << tiempoDeJuego << cantNecesariasParaArrancar << precio << std::endl;
-    //}
+        //esto se guarda en el padre
+        FolletoJuego fj(precio,nombreJuego);
+        cartillaJuegos.push_back(fj);
+        procesosCreados.push_back(processId);
+    }
 
+    return 0;
+}
 
-    return probarJuegosPersonas(1,1);
+int probarLogger(int cantLoggers)
+{
+    pid_t processId;
+
+    for(int i=0;i<cantLoggers;i++)
+    {
+        processId = fork() ;
+        if ( processId == 0 )
+        {
+            Logger logger;
+            std::stringstream ss;
+            ss << i;
+            std::string ii = ss.str();
+
+            for(int i=0;i<20;i++)
+            {
+                logger.loggear(ii,"xxxxx","WARNING");
+            }
+            break;
+        }
+    }
+
+    if (processId != 0)
+    {
+        for(int i=0;i<cantLoggers;i++)
+        {
+            wait(NULL);
+        }
+        Logger logger;
+        logger.loggear("procesoPadre","joine a todos mis hijos","EXITO");
+    }
+
+    return 0;
+}
+
+int main () {
+    return probarLogger(5);
+    //return probarJuegosPersonas(1,5);
 
     return 0;
 }

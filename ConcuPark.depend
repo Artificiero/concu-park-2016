@@ -14,17 +14,17 @@
 	<stdlib.h>
 	"LockFile.h"
 
-1461284756 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/LockFile.cpp
+1463115403 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/LockFile.cpp
 	"LockFile.h"
 
-1461204897 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/LockFile.h
+1463115373 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/LockFile.h
 	<iostream>
 	<errno.h>
 	<unistd.h>
 	<fcntl.h>
 	<string>
 
-1463084276 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
+1463116111 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
 	<iostream>
 	<stdlib.h>
 	"LockFile.h"
@@ -39,6 +39,7 @@
 	<cstring>
 	"Juego.h"
 	<map>
+	"Logger.h"
 	<fstream>
 
 1461211525 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Puerta.cpp
@@ -65,7 +66,7 @@
 	"LockFile.h"
 	"MemoriaCompartida2.h"
 
-1463083047 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
+1463099126 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
 	"Persona.h"
 
 1463076547 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Persona.h
@@ -79,33 +80,35 @@
 	"FifoEscritura.h"
 	"FifoLectura.h"
 
-1415239070 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Fifo.cpp
+1463097137 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Fifo.cpp
 	"Fifo.h"
 
-1463083247 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Fifo.h
+1463097088 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Fifo.h
 	<string>
 	<sys/types.h>
 	<sys/stat.h>
 	<fcntl.h>
 	<unistd.h>
 	<iostream>
+	<errno.h>
+	<cstdio>
 
-1415239070 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/FifoEscritura.cpp
+1463095232 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/FifoEscritura.cpp
 	"FifoEscritura.h"
 
 1415239070 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/FifoEscritura.h
 	"Fifo.h"
 
-1463083214 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/FifoLectura.cpp
+1463093890 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/FifoLectura.cpp
 	"FifoLectura.h"
 
 1415239070 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/FifoLectura.h
 	"Fifo.h"
 
-1463083095 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Juego.cpp
+1463095738 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Juego.cpp
 	"Juego.h"
 
-1463069937 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Juego.h
+1463095512 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Juego.h
 	<string>
 	"FifoEscritura.h"
 	"FifoLectura.h"
@@ -129,4 +132,15 @@
 
 1463073322 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/FolletoJuego.cpp
 	"FolletoJuego.h"
+
+1463116180 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Logger.cpp
+	"Logger.h"
+
+1463116237 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Logger.h
+	"LockFile.h"
+	<iostream>
+	<string>
+	<stdio.h>
+	<time.h>
+	<fstream>
 
