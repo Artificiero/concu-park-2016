@@ -41,11 +41,24 @@ int Juego::iniciar()
 
             //las personas ENTRAN DE A 1
             //me bloqueo hasta que alguien quiere subir al juego
-            logger.l("Juego",this->nombre,"busco personas en mi cola");
-            ssize_t bytesLeidos = cola.leer(static_cast<void*>(buffer),sizeof(buffer));
-            std::string auxMsj;
+            logger.l("Juego",this->nombre,"espero personas nuevas en mi cola de espera");
 
-            logger.l("Juego",this->nombre,std::string("leyo ") + buffer + std::string(" peso: ")+ intToString(bytesLeidos));
+            bool flag=true;
+            while(flag)
+            {
+                ssize_t bytesLeidos = cola.leer(static_cast<void*>(buffer),sizeof(buffer));
+                if (bytesLeidos !=0){
+                    flag = false;
+                    logger.l("Juego",this->nombre,std::string("leyo ") + buffer + std::string(" peso: ")+ intToString(bytesLeidos));
+                }
+                else
+                {
+                    //me quedo bloqueado hasta que alguien abra para escritura
+                    logger.l("Juego",this->nombre,"espero personas nuevas en mi cola de espera");
+                    cola.abrir();
+                }
+            }
+            std::string auxMsj;
 
             //aumento cantidad de gente en la cola al entrar alguien, me libero y checkeo condicion
             this->nombresPersonas.push_front(std::string(buffer));

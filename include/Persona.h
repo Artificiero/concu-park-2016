@@ -11,6 +11,7 @@
 #include "FifoEscritura.h"
 #include "FifoLectura.h"
 #include "Logger.h"
+#include <sstream>
 
 class Persona
 {

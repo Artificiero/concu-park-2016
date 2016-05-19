@@ -146,7 +146,7 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
         std::stringstream ss;
         ss << numeroDeJuego;
         std::string nombreJuego = ss.str();
-        Juego juego(nombreJuego,1,1,1);
+        Juego juego(nombreJuego,1,2,1);
 
         //aca dentro esta la inteligencia del juego y el loop
         juego.iniciar();
@@ -154,7 +154,23 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
 	} else {
         //proceso principal padre
         //ordenado de menor a mayor
-        sleep(2);
+        sleep(5);
+
+//        std::list<FifoEscritura*> fifos;
+//
+//        for(int i=0;i<cantidadDeJuegos;i++){
+//
+//            std::stringstream ss;
+//            ss << i;
+//            std::string nombreJuego = ss.str();
+//
+//            const std::string ARCHIVO_JUEGO = "/tmp/archivo_fifo_juego_" + nombreJuego;
+//
+//            FifoEscritura* canalJuego = new FifoEscritura( ARCHIVO_JUEGO );
+//            fifos.push_front( canalJuego );
+//            canalJuego->abrir();
+//        }
+
         cartillaJuegos.sort();
 
         int numeroDePersona=0;
@@ -181,8 +197,13 @@ int probarJuegosPersonas(int cantidadDeJuegos,int cantidadPersonas) {
             //aca dentro esta la inteligencia del juego y el loop
             persona.vivir();
         } else {
-            wait(NULL);
-        // tengo una listaprocesosCreados ... puedo leer algo de consola y mandar signal para detener a todos!
+            for(unsigned int i=0;i<procesosCreados.size();i++){
+                wait(NULL);
+            }
+//            for (std::list<FifoEscritura*>::iterator it=fifos.begin(); it!=fifos.end(); ++it)
+//            {
+//                delete *it;
+//            }
         }
 	}
 
@@ -251,7 +272,7 @@ int probarLogger(int cantLoggers)
 }
 
 int main () {
-    return probarJuegosPersonas(1,1);
+    return probarJuegosPersonas(1,20);
 
     return 0;
 }

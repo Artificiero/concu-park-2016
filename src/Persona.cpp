@@ -27,8 +27,7 @@ int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 
         logger.l("Persona",this->nombre,"intente entrar al juego(escribir en el fifo):"+ARCHIVO_JUEGO );
 		canalJuego.escribir ( static_cast<const void*>(buff),sizeof(buff) );
-        logger.l("Persona",this->nombre, "Logre comunicarme con el juego");
-        //canalJuego.cerrar();
+        logger.l("Persona",this->nombre, std::string("Logre comunicarme con el juego ")+nombreJuego );
 
         static const std::string lecturaPropiaHijo = "/tmp/archivo_fifo_persona_" + this->nombre;
 
@@ -49,7 +48,6 @@ int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 		canalLeerPropioHijo.cerrar();
 		canalLeerPropioHijo.eliminar();
         logger.l("Persona",this->nombre,"[Lector] fin proceso" );
-        sleep(10);
 		return 0;
 }
 
