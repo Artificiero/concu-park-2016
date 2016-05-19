@@ -35,7 +35,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/AdministradorDelParque.h" />
 		<Unit filename="include/CajaCentral.h" />
+		<Unit filename="include/EventHandler.h" />
 		<Unit filename="include/Fifo.h" />
 		<Unit filename="include/FifoEscritura.h" />
 		<Unit filename="include/FifoLectura.h" />
@@ -46,7 +48,10 @@
 		<Unit filename="include/MemoriaCompartida2.h" />
 		<Unit filename="include/Persona.h" />
 		<Unit filename="include/Puerta.h" />
+		<Unit filename="include/SIGINT_Handler.h" />
 		<Unit filename="include/Semaforo.h" />
+		<Unit filename="include/SignalHandler.h" />
+		<Unit filename="src/AdministradorDelParque.cpp" />
 		<Unit filename="src/CajaCentral.cpp" />
 		<Unit filename="src/Fifo.cpp" />
 		<Unit filename="src/FifoEscritura.cpp" />
@@ -58,6 +63,7 @@
 		<Unit filename="src/Persona.cpp" />
 		<Unit filename="src/Puerta.cpp" />
 		<Unit filename="src/Semaforo.cpp" />
+		<Unit filename="src/SignalHandler.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />

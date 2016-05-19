@@ -61,7 +61,7 @@
 	<iostream>
 	<errno.h>
 
-1463689411 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/CajaCentral.cpp
+1463689538 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/CajaCentral.cpp
 	"CajaCentral.h"
 
 1463689333 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/CajaCentral.h
@@ -69,7 +69,7 @@
 	"MemoriaCompartida2.h"
 	<sstream>
 
-1463686626 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
+1463691221 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
 	"Persona.h"
 
 1463684755 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Persona.h
@@ -154,7 +154,18 @@
 1463687259 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/AdministradorDelParque.cpp
 	"AdministradorDelParque.h"
 
-1463689442 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/AdministradorDelParque.h
+1463689525 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/AdministradorDelParque.h
 	"CajaCentral.h"
 	"Logger.h"
+
+1410147822 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/SignalHandler.cpp
+	"SignalHandler.h"
+
+1410147822 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/SignalHandler.h
+	<signal.h>
+	<stdio.h>
+	<memory.h>
+	"EventHandler.h"
+
+1410147822 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/EventHandler.h
 

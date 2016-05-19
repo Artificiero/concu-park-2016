@@ -55,7 +55,7 @@ int Persona::vivir()
 {
     std::cout << "persona viviendo" << std::endl;
     CajaCentral cajaCentral;
-    std::cout << "aaawwwwwwwwwwww" << std::endl;
+
     Logger logger;
 
     logger.l("Persona",this->nombre,"Voy a entrar al parque");
@@ -66,7 +66,7 @@ int Persona::vivir()
 
     std::list<FolletoJuego>::iterator it=this->cartillaDeJuegos.begin();
 
-    while ( (this->presupuesto > 0) || (!proximoJuegoCuestaMasDeLoQuePuedo) )
+    while ( (this->presupuesto > 0) && (!proximoJuegoCuestaMasDeLoQuePuedo) )
     {
         //veo el siguiente juego en la lista
         FolletoJuego fj = *it ;
