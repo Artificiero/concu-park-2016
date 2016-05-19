@@ -231,7 +231,7 @@ int probarLogger(int cantLoggers)
 
             for(int i=0;i<20;i++)
             {
-                logger.loggear(ii,"xxxxx","WARNING");
+                logger.l(ii,"xxxxx","WARNING");
             }
             break;
         }
@@ -244,15 +244,14 @@ int probarLogger(int cantLoggers)
             wait(NULL);
         }
         Logger logger;
-        logger.loggear("procesoPadre","joine a todos mis hijos","EXITO");
+        logger.l("procesoPadre","joine a todos mis hijos","EXITO");
     }
 
     return 0;
 }
 
 int main () {
-    return probarLogger(5);
-    //return probarJuegosPersonas(1,5);
+    return probarJuegosPersonas(1,1);
 
     return 0;
 }

@@ -1,5 +1,12 @@
 #include "Juego.h"
 
+std::string intToString(int num){
+            std::stringstream ss;
+            ss << num;
+            std::string bytesRead = ss.str();
+            return bytesRead;
+}
+
 Juego::Juego(std::string nombre, int tiempoDeJuego, int cantNecesariasParaArrancar,int precio):nombre(nombre),tiempoDeJuego(tiempoDeJuego),cantidadDePersonasEnLaCola(0)
                                                                                                 ,cantidadDePersonasNecesariasParaArrancar(cantNecesariasParaArrancar),precioParaSubir(precio)
 {
@@ -12,16 +19,19 @@ Juego::~Juego()
 
 int Juego::iniciar()
 {
+    Logger logger;
     //Este es el fifo que las Personas usan para ponerse en la cola del Juego.Convencion de nombres.
     FifoLectura cola("/tmp/archivo_fifo_juego_" + this->nombre);
-    std::cout << "Juego)" << this->nombre << " se inicio" << std::endl;
+
+    logger.l("Juego",this->nombre,"se inicio");
     //voy a usar este fifo para recibir los nombres de las personas que quieren subir
     cola.abrir();
-    std::cout << "Juego)" << this->nombre << " abrio su cola" << std::endl;
+    logger.l("Juego",this->nombre,"abrio su cola de espera");
 
     while(true)
     {
-        std::cout << "Juego)"<< this->nombre << " nueva iteracion" << std::endl;
+        logger.l("Juego",this->nombre,"nueva iteracion");
+
         //cada persona que entra me "despierta", y me hace checkear la condicion
         while( this->cantidadDePersonasEnLaCola < this->cantidadDePersonasNecesariasParaArrancar )
         {
@@ -31,15 +41,17 @@ int Juego::iniciar()
 
             //las personas ENTRAN DE A 1
             //me bloqueo hasta que alguien quiere subir al juego
-            std::cout << "Juego)" << this->nombre << " busco personas en mi cola" << std::endl;
+            logger.l("Juego",this->nombre,"busco personas en mi cola");
             ssize_t bytesLeidos = cola.leer(static_cast<void*>(buffer),sizeof(buffer));
-            std::cout << "Juego)"<< this->nombre << " leyo "<< buffer << " peso: "<< bytesLeidos << std::endl;
+            std::string auxMsj;
+
+            logger.l("Juego",this->nombre,std::string("leyo ") + buffer + std::string(" peso: ")+ intToString(bytesLeidos));
 
             //aumento cantidad de gente en la cola al entrar alguien, me libero y checkeo condicion
             this->nombresPersonas.push_front(std::string(buffer));
             this->cantidadDePersonasEnLaCola++;
         }
-        std::cout << "Juego)"<< this->nombre << " hay suficientes personas para correr" << std::endl;
+        logger.l("Juego",this->nombre,"hay suficientes personas para correr");
         //cuando hay la SUFICIENTE CANTIDAD DE PERSONAS, arranco.
         //Las demas personas ,que estan esperando para entrar y todavia no entraron,
         //se quedan bloquedas en el write al fifo COLA del juego
@@ -50,7 +62,8 @@ int Juego::iniciar()
 
         int i=0;
         //las personas se bajan del juego DE A UNA
-        std::cout << "personas en la lista" << this->nombresPersonas.size() << std::endl;
+        logger.l("Juego",this->nombre,std::string("personas en la lista:")+intToString(this->nombresPersonas.size()));
+
         for (std::list<std::string>::iterator it=this->nombresPersonas.begin(); it!=this->nombresPersonas.end(); ++it)
         {
                 std::string nomPer = *it;
@@ -58,15 +71,17 @@ int Juego::iniciar()
 
                 //se que el fifo se llama asi por CONVENCION
                 std::string nombreCanalDeUnaPersona = "/tmp/archivo_fifo_persona_" + nomPer;
-                std::cout << "iteracion:" << i << " Juego)" << this->nombre << " : " << nombreCanalDeUnaPersona << std::endl;
+
+                logger.l("Juego",this->nombre,"iteracion "+intToString(i)+nombreCanalDeUnaPersona);
 
                 FifoEscritura canalPersona (nombreCanalDeUnaPersona);
                 canalPersona.abrir();
-                std::cout << "Juego)"<< this->nombre << " : " << "se abrio canal " << nombreCanalDeUnaPersona << std::endl;
+
+                logger.l("Juego",this->nombre,"se abrio canal "+nombreCanalDeUnaPersona);
 
                 //la persona esta bloqueada con una lectura a su propio fifo, esperando que el juego escriba
                 canalPersona.escribir ( static_cast<const void*>(mensaje.c_str()),mensaje.length() );
-                std::cout << "Juego)"<< this->nombre << " : " << "Escribi en el fifo " << nombreCanalDeUnaPersona << std::endl;
+                logger.l("Juego",this->nombre,"Escribi en el fifo " +nombreCanalDeUnaPersona);
                 canalPersona.cerrar();
                 i++;
         }
@@ -85,6 +100,9 @@ int Juego::iniciar()
 
 int Juego::arrancarUnaPasada()
 {
+    Logger logger;
+    logger.l("Juego",this->nombre,"arranco pasada del juego");
     sleep(this->tiempoDeJuego);
+    logger.l("Juego",this->nombre,"fin pasada del juego");
     return 0;
 }

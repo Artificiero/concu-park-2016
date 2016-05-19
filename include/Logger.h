@@ -14,7 +14,7 @@ class Logger
         Logger();
         Logger(std::string nombre);
         virtual ~Logger();
-        int loggear(std::string nombreActor,std::string msj,std::string tipoMensaje="DEBUG");
+        int l(std::string tipoActor,std::string nombreActor,std::string msj,std::string tipoMensaje="DEBUG");
     protected:
     private:
 

@@ -12,7 +12,7 @@ LockFile :: LockFile ( const std::string nombre ) {
 	if (fdAux >= 0) {
 		this->fd = fdAux;
 	} else {
-        std::cout << "!!!PANICO!!! No se pudo crear el file para el lock: " << nombre << std::endl;
+        std::cout << "!!!!!!!PANICO!!!!!!!! No se pudo crear el file para el lock: " << nombre << std::endl;
 	}
 }
 
@@ -21,7 +21,7 @@ int LockFile :: tomarLock () {
 	//F_SETLKW == Si ya existe el lock sobre el file, espera hasta que se libere
 	int fcntlReturnValue = fcntl ( this->fd,F_SETLKW,&(this->fl) );
 	if ( fcntlReturnValue < 0 ) {
-        std::cout << "!!!PANICO!!! fallo adquirir el lock" << fcntlReturnValue << " " << this->nombre << std::endl;
+        std::cout << "!!!!!!!PANICO!!!!!!!! fallo adquirir el lock" << fcntlReturnValue << " " << this->nombre << std::endl;
     }
 	return fcntlReturnValue;
 }
@@ -31,7 +31,7 @@ int LockFile :: liberarLock () {
 	//fcntl Acquire a lock (when l_type is F_RDLCK or F_WRLCK) or release a lock (when l_type is F_UNLCK)
     int fcntlReturnValue = fcntl ( this->fd,F_SETLK,&(this->fl) );
     if ( fcntlReturnValue < 0 ) {
-        std::cout << "!!!PANICO!!! fallo liberar el lock" << errno << " " << this->nombre << std::endl;
+        std::cout << "!!!!!!!PANICO!!!!!!!! fallo liberar el lock" << errno << " " << this->nombre << std::endl;
     }
 	return fcntlReturnValue;
 }

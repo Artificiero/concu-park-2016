@@ -10,6 +10,7 @@
 #include <cstring>
 #include "FifoEscritura.h"
 #include "FifoLectura.h"
+#include "Logger.h"
 
 class Persona
 {

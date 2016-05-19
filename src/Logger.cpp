@@ -12,13 +12,13 @@ Logger::~Logger()
 {
 }
 
-int Logger::loggear(std::string nombreActor, std::string msj, std::string tipoMensaje)
+int Logger::l(std::string tipoActor,std::string nombreActor, std::string msj, std::string tipoMensaje)
 {
     //muchos procesos van a estar al mismo tiempo escribiendo a un UNICO archivo
     //asi que debo protegerlo con un lock
     this->lockEscritura.tomarLock();
 
-    std::string msjparseado = this->currentDateTime() + "-" + tipoMensaje + "-"+ nombreActor + "-"+ msj;
+    std::string msjparseado = this->currentDateTime() + "-" + tipoMensaje + "-"+ tipoActor + "-"+ nombreActor + "-"+ msj;
     std::ofstream myfile;
     myfile.open (this->nombre.c_str(), std::ios::out | std::ios::app);
     myfile << msjparseado << std::endl;

@@ -8,6 +8,8 @@
 #include <sys/wait.h>
 #include <cstring>
 #include <list>
+#include "Logger.h"
+#include <sstream>
 
 class Juego
 {

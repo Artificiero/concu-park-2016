@@ -13,6 +13,8 @@ Persona::~Persona()
 
 int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 {
+        Logger logger;
+
         const std::string ARCHIVO_JUEGO = "/tmp/archivo_fifo_juego_" + nombreJuego;
 
         char buff[sizeof(int)];
@@ -23,40 +25,41 @@ int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 		FifoEscritura canalJuego ( ARCHIVO_JUEGO );
 		canalJuego.abrir();
 
-		std::cout << "Persona:"<< this->nombre << " :intento entrar al juego(escribir en el fifo):"<< ARCHIVO_JUEGO << std::endl;
+        logger.l("Persona",this->nombre,"intente entrar al juego(escribir en el fifo):"+ARCHIVO_JUEGO );
 		canalJuego.escribir ( static_cast<const void*>(buff),sizeof(buff) );
-        std::cout << "Persona:"<< this->nombre << " Logre comunicarme con el juego, mande " << sizeof(buff) << " bytes"<< std::endl;
+        logger.l("Persona",this->nombre, "Logre comunicarme con el juego");
         //canalJuego.cerrar();
 
         static const std::string lecturaPropiaHijo = "/tmp/archivo_fifo_persona_" + this->nombre;
 
 		FifoLectura canalLeerPropioHijo (lecturaPropiaHijo);
-		std::cout << "Persona:"<< this->nombre << " intento abrir canal propio:"<< lecturaPropiaHijo <<  std::endl;
+        logger.l("Persona",this->nombre, "intento abrir canal propio:"+lecturaPropiaHijo);
 		canalLeerPropioHijo.abrir();
-		std::cout << "Persona:"<< this->nombre << " canal propio abierto"<< std::endl;
+        logger.l("Persona",this->nombre, "canal propio abierto:"+lecturaPropiaHijo);
 
         int BUFFSIZE = 100;
 		char buffer[BUFFSIZE];
 
-		std::cout << "Persona:"<< this->nombre <<" [Lector] esperando que me libere el juego" << std::endl;
+        logger.l("Persona",this->nombre,"esperando que me libere el juego");
 		ssize_t bytesLeidos = canalLeerPropioHijo.leer(static_cast<void*>(buffer),BUFFSIZE);
 		std::string mensaje = buffer;
 		mensaje.resize ( bytesLeidos );
-		std::cout << "Persona:"<< this->nombre <<" [Lector] Lei el dato del fifo: " << mensaje << std::endl;
+        logger.l("Persona",this->nombre,"[Lector] Lei el dato del fifo: "+mensaje );
 
 		canalLeerPropioHijo.cerrar();
 		canalLeerPropioHijo.eliminar();
-		std::cout << "Persona:"<< this->nombre <<" [Lector] Fin del proceso" << std::endl;
-
+        logger.l("Persona",this->nombre,"[Lector] fin proceso" );
+        sleep(10);
 		return 0;
 }
 
 int Persona::vivir()
 {
+    Logger logger;
 
-    std::cout << "Persona:" << this->nombre << ":"<< "Voy a entrar al parque" << std::endl;
+    logger.l("Persona",this->nombre,"Voy a entrar al parque");
     this->puertaEntrada.cruzar();
-    std::cout << "Persona:" << this->nombre << ":"<< "Entre!" << std::endl;
+    logger.l("Persona",this->nombre,"Entre!");
 
     bool proximoJuegoCuestaMasDeLoQuePuedo = false;
 
@@ -73,7 +76,6 @@ int Persona::vivir()
             //pago el juego -> o sea la plata va a la caja central
             this->presupuesto = this->presupuesto - fj.getPrecio();
             this->cajaCentral.ingresarDinero(fj.getPrecio());
-
             //entro al juego, con su respectivo tiempo de espera de cola + pasada
             this->ponerseEnColaDeJuego(fj.getNombre());
 
@@ -86,15 +88,12 @@ int Persona::vivir()
         } else {
             //me quede sin plata suficiente para subir al proximo juego
             proximoJuegoCuestaMasDeLoQuePuedo = true;
-            std::cout << "**************Persona:"<< this->nombre << ":"<< "me quede sin plata!***********" << std::endl;
+            logger.l("Persona",this->nombre,"*******me quede sin plata!!!!!!*******");
         }
     }
-
-    std::cout << "Persona:" << this->nombre << ":"<< "!!!!!!!Voy a salir del parque!!!!!!!!" << std::endl;
+    logger.l("Persona",this->nombre,"!!!!!!!Voy a salir del parque!!!!!!!!");
     this->puertaSalida.cruzar();
-    std::cout << "Persona:" << this->nombre << ":"<< "sali!" << std::endl;
-
-    sleep(10);
-
+    sleep(3);
+    logger.l("Persona",this->nombre,"!!!!!!!sali!!!!!!!!");
     return 0;
 }
