@@ -42,5 +42,5 @@ ssize_t LockFile :: escribir ( const void* buffer,const ssize_t buffsize ) const
 }
 
 LockFile :: ~LockFile () {
-	close ( this->fd );
+    close(this->fd);
 }

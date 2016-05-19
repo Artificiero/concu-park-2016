@@ -18,6 +18,7 @@ class Juego
         int iniciar();
         int arrancarUnaPasada();
         virtual ~Juego();
+        std::string getNombre(){return this->nombre;}
     protected:
     private:
     std::string nombre;

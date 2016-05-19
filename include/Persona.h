@@ -16,7 +16,7 @@
 class Persona
 {
     public:
-        Persona(unsigned int presupuesto,std::string nombre,Puerta &puertaEntrada,Puerta &PuertaSalida,CajaCentral &cajaCentral,std::list<FolletoJuego> cartillaDeJuegos);
+        Persona(unsigned int presupuesto,std::string nombre,Puerta &puertaEntrada,Puerta &PuertaSalida,std::list<FolletoJuego> cartillaDeJuegos);
         virtual ~Persona();
 
         int vivir();
@@ -24,6 +24,8 @@ class Persona
         int getPlataRestante() const {
             return this->presupuesto;
             }
+
+        std::string getNombre(){return this->nombre;}
 
         int ponerseEnColaDeJuego(std::string nombreDelJuego);
 
@@ -35,8 +37,6 @@ class Persona
 
     Puerta puertaEntrada;
     Puerta puertaSalida;
-
-    CajaCentral cajaCentral;
 
     std::list<FolletoJuego> cartillaDeJuegos;
 };

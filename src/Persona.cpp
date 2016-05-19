@@ -1,7 +1,7 @@
 #include "Persona.h"
 
 //se supone la cartilla de juegos ordenadas de menor a mayor por precio
-Persona::Persona(unsigned int presupuesto,std::string nombre,Puerta& puertaE,Puerta& PuertaS,CajaCentral& cajaC,std::list<FolletoJuego> cartillaDeJuegos): presupuesto(presupuesto),nombre(nombre),puertaEntrada(puertaE),puertaSalida(PuertaS),cajaCentral(cajaC),cartillaDeJuegos(cartillaDeJuegos)
+Persona::Persona(unsigned int presupuesto,std::string nombre,Puerta& puertaE,Puerta& PuertaS,std::list<FolletoJuego> cartillaDeJuegos): presupuesto(presupuesto),nombre(nombre),puertaEntrada(puertaE),puertaSalida(PuertaS),cartillaDeJuegos(cartillaDeJuegos)
 {
     //ctor
 }
@@ -53,6 +53,9 @@ int Persona::ponerseEnColaDeJuego(std::string nombreJuego)
 
 int Persona::vivir()
 {
+    std::cout << "persona viviendo" << std::endl;
+    CajaCentral cajaCentral;
+    std::cout << "aaawwwwwwwwwwww" << std::endl;
     Logger logger;
 
     logger.l("Persona",this->nombre,"Voy a entrar al parque");
@@ -73,7 +76,7 @@ int Persona::vivir()
         {
             //pago el juego -> o sea la plata va a la caja central
             this->presupuesto = this->presupuesto - fj.getPrecio();
-            this->cajaCentral.ingresarDinero(fj.getPrecio());
+            cajaCentral.ingresarDinero(fj.getPrecio());
             //entro al juego, con su respectivo tiempo de espera de cola + pasada
             this->ponerseEnColaDeJuego(fj.getNombre());
 

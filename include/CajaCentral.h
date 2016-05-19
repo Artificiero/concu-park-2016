@@ -3,11 +3,12 @@
 
 #include "LockFile.h"
 #include "MemoriaCompartida2.h"
+#include <sstream>
 
 class CajaCentral
 {
     public:
-        CajaCentral(std::string nombre);
+        CajaCentral();
         virtual ~CajaCentral();
 
         int ingresarDinero(int billetes);
@@ -15,9 +16,8 @@ class CajaCentral
 
     protected:
     private:
-
-    LockFile lock;
     std::string nombre;
+    LockFile lock;
     MemoriaCompartida2<int> plata;
 };
 
