@@ -87,14 +87,21 @@ int Persona::vivir()
             }
 
         } else {
-            //me quede sin plata suficiente para subir al proximo juego
-            proximoJuegoCuestaMasDeLoQuePuedo = true;
-            logger.l("Persona",this->nombre,"*******me quede sin plata!!!!!!*******");
+            if (this->presupuesto==0)
+            {
+                //me quede sin plata, me voy
+                proximoJuegoCuestaMasDeLoQuePuedo = true;
+                logger.l("Persona",this->nombre,"*******me quede sin plata!!!!!!*******");
+            }
+            else
+            {
+                //me quede sin plata suficiente para subir al proximo juego,agarro el mas barato
+                it=this->cartillaDeJuegos.begin();
+            }
         }
     }
     logger.l("Persona",this->nombre,"!!!!!!!Voy a salir del parque!!!!!!!!");
     this->puertaSalida.cruzar();
-    sleep(3);
     logger.l("Persona",this->nombre,"!!!!!!!sali!!!!!!!!");
     return 0;
 }

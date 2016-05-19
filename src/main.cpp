@@ -15,6 +15,7 @@
 #include "Logger.h"
 #include <vector>
 #include "AdministradorDelParque.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ using namespace std;
 
 int probarJuegosPersonas(std::vector<Juego>& juegos,std::vector<Persona>& personas ) {
 
+    Logger logger;
     int numeroDeJuego=0;
     pid_t processId;
     std::list<pid_t> procesosCreados;
@@ -80,18 +82,21 @@ int probarJuegosPersonas(std::vector<Juego>& juegos,std::vector<Persona>& person
             if ( processId == 0 )
             {
                 AdministradorDelParque admin;
+
                 admin.vivir();
             }
             else
             {
                 //padre espera
-                for(unsigned int i=0;i<procesosCreados.size();i++){
+                for(unsigned int i=0;i<personas.size();i++){
                     wait(NULL);
+                    logger.l("Parque","sistema","una persona menos en el parque");
                 }
+                logger.l("Parque","sistema","cierro parque");
             }
         }
 	}
-
+    logger.l("xxxxxx","xxxxx","xxxxx");
     return 0;
 }
 

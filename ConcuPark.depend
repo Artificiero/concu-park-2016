@@ -24,7 +24,7 @@
 	<fcntl.h>
 	<string>
 
-1463689166 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
+1463695067 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/main.cpp
 	<iostream>
 	<stdlib.h>
 	"LockFile.h"
@@ -42,6 +42,7 @@
 	"Logger.h"
 	<vector>
 	"AdministradorDelParque.h"
+	"Logger.h"
 	<fstream>
 
 1461211525 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Puerta.cpp
@@ -69,7 +70,7 @@
 	"MemoriaCompartida2.h"
 	<sstream>
 
-1463691221 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
+1463694760 source:/home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/src/Persona.cpp
 	"Persona.h"
 
 1463684755 /home/tomrea/Dropbox/ConcuPark2016/concu-park-2016/include/Persona.h
